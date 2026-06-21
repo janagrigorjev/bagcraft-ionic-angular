@@ -1,0 +1,42 @@
+<ion-app>
+  <ion-menu contentId="main-content" *ngIf="authService.isLoggedIn()">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>BagCraft</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item button href="/orders">
+          <ion-icon name="bag-handle-outline" slot="start"></ion-icon>
+          <ion-label>Moje porudžbine</ion-label>
+        </ion-item>
+
+        <ion-item button href="/orders/new">
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+          <ion-label>Nova torbica</ion-label>
+        </ion-item>
+
+        <ion-item button href="/admin/orders" *ngIf="authService.isAdmin()">
+          <ion-icon name="construct-outline" slot="start"></ion-icon>
+          <ion-label>Admin porudžbine</ion-label>
+        </ion-item>
+
+        <ion-item button href="/profile">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>Profil</ion-label>
+        </ion-item>
+
+        <ion-item button (click)="logout()">
+  <ion-icon name="log-out-outline" slot="start"></ion-icon>
+  <ion-label>Odjavi se</ion-label>
+</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <div class="ion-page" id="main-content">
+    <ion-router-outlet></ion-router-outlet>
+  </div>
+</ion-app>
