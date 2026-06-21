@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Profil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-padding profile-page">
+    <ion-card class="profile-hero">
+      <ion-card-content>
+        <div class="profile-avatar">
+          {{ authService.getUserEmail()?.charAt(0)?.toUpperCase() || 'B' }}
+        </div>
+
+        <h1>BagCraft nalog</h1>
+
+        <p class="profile-email">
+          {{ authService.getUserEmail() }}
+        </p>
+
+        <div class="profile-badge admin" *ngIf="authService.isAdmin()">
+          Administrator / izrađivač torbica
+        </div>
+
+        <div class="profile-badge user" *ngIf="!authService.isAdmin()">
+          Kupac
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="profile-info-card">
+      <ion-card-header>
+        <ion-card-title>Pregled naloga</ion-card-title>
+        <ion-card-subtitle>Upravljanje porudžbinama i profilom</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div class="info-row">
+          <div class="info-icon">♡</div>
+          <div>
+            <h3>Moje porudžbine</h3>
+            <p>Pregled svih kreiranih personalizovanih torbica.</p>
+          </div>
+        </div>
+
+        <div class="info-row" *ngIf="authService.isAdmin()">
+          <div>
+            <h3>Admin prikaz</h3>
+            <p>Pregled svih porudžbina i promena statusa izrade.</p>
+          </div>
+        </div>
+
+        <div class="profile-actions">
+          <ion-button expand="block" href="/orders">
+            Moje porudžbine
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            href="/admin/orders"
+            *ngIf="authService.isAdmin()"
+          >
+            Admin porudžbine
+          </ion-button>
+
+          <ion-button
+            expand="block"
+            color="danger"
+            fill="outline"
+            (click)="authService.logout()"
+          >
+            Odjavi se
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
