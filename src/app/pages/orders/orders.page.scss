@@ -1,0 +1,113 @@
+.intro-card {
+  overflow: hidden;
+  position: relative;
+  margin-top: 18px;
+  min-height: 210px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 244, 250, 0.92)),
+    radial-gradient(circle at top right, rgba(200, 164, 93, 0.35), transparent 38%);
+}
+
+.intro-card::before {
+  content: '';
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  right: -60px;
+  top: -60px;
+  background: radial-gradient(circle, rgba(155, 23, 79, 0.22), transparent 68%);
+}
+
+.intro-card::after {
+  position: absolute;
+  right: 34px;
+  top: 28px;
+  color: #c8a45d;
+  font-size: 44px;
+  opacity: 0.85;
+}
+
+.intro-card ion-card-title {
+  font-size: 34px;
+  color: #5c0f2d;
+}
+
+.intro-card ion-card-subtitle {
+  font-size: 14px;
+  color: #b5165a;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+}
+
+.intro-card ion-card-content {
+  position: relative;
+  z-index: 1;
+  color: #4b303b;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.intro-card ion-button {
+  margin-top: 22px;
+  height: 48px;
+}
+
+.empty-state {
+  margin: 48px auto 0;
+  padding: 38px 24px;
+  max-width: 520px;
+  text-align: center;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px dashed rgba(200, 164, 93, 0.75);
+  box-shadow: 0 18px 40px rgba(92, 15, 45, 0.10);
+}
+
+.empty-state h2 {
+  margin-bottom: 10px;
+  color: #5c0f2d;
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.empty-state p {
+  color: #6c4b58;
+  font-size: 16px;
+}
+
+ion-list {
+  background: transparent;
+  display: grid;
+  gap: 18px;
+}
+
+ion-list ion-card {
+  margin: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ion-list ion-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 50px rgba(92, 15, 45, 0.20);
+}
+
+.status-chip {
+  margin-bottom: 12px;
+  --background: rgba(155, 23, 79, 0.12);
+  --color: #7d123c;
+  border: 1px solid rgba(200, 164, 93, 0.5);
+}
+
+ion-spinner {
+  display: block;
+  margin: 30px auto;
+  color: #9b174f;
+}
+
+ion-fab-button {
+  --background: linear-gradient(135deg, #9b174f, #c8a45d);
+  --color: #ffffff;
+  --box-shadow: 0 14px 30px rgba(155, 23, 79, 0.35);
+}

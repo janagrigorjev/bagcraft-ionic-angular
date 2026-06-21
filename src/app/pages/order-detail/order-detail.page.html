@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/orders"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalji porudžbine</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-padding">
+    <ion-spinner *ngIf="loading"></ion-spinner>
+
+    <ng-container *ngIf="!loading && order">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ order.customerName }}</ion-card-title>
+          <ion-card-subtitle>{{ order.createdAt | date: 'dd.MM.yyyy. HH:mm' }}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-chip color="primary" class="status-chip">{{ statusLabels[order.status] }}</ion-chip>
+          <h2>{{ order.price | number }} RSD</h2>
+          <p><strong>Telefon:</strong> {{ order.phone }}</p>
+          <p><strong>Količina:</strong> {{ order.quantity }}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-list inset="true">
+        <ion-item>
+          <ion-label>Model</ion-label>
+          <ion-note slot="end">{{ labelOf('model', order.modelId) }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Materijal</ion-label>
+          <ion-note slot="end">{{ labelOf('material', order.materialId) }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Boja</ion-label>
+          <ion-note slot="end">{{ order.color }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Veličina</ion-label>
+          <ion-note slot="end">{{ labelOf('size', order.sizeId) }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Ručka / kaiš</ion-label>
+          <ion-note slot="end">{{ labelOf('handle', order.handleId) }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label>Dodatni ukrasi</ion-label>
+          <ion-note slot="end" class="ion-text-wrap">{{ addonLabels() }}</ion-note>
+        </ion-item>
+        <ion-item *ngIf="order.note">
+          <ion-label class="ion-text-wrap">Napomena: {{ order.note }}</ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" color="secondary" [href]="'/orders/' + order.id + '/edit'" [disabled]="!canEdit()">Izmeni porudžbinu
+      </ion-button>
+
+      <ion-note *ngIf="!canEdit()">Porudžbina može da se menja samo dok je status „Poslata”.
+      </ion-note>
+
+      <ion-button expand="block" color="warning" fill="outline" (click)="cancelOrder()" [disabled]="!canEdit()">Otkaži porudžbinu
+      </ion-button>
+
+    </ng-container>
+  </div>
+</ion-content>

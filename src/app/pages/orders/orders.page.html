@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Moje porudžbine</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button href="/profile">
+        <ion-icon name="person-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="loadOrders($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <div class="page-padding">
+    <ion-card class="intro-card">
+      <ion-card-header>
+        <ion-card-title>BagCraft</ion-card-title>
+        <ion-card-subtitle>
+          Personalizovane ručno izrađene torbice
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        Ovde vidiš svoje porudžbine, njihov status i ukupnu cenu.
+        Nova torbica se kreira kroz konfigurator.
+
+        <ion-button
+          expand="block"
+          href="/orders/new"
+          class="ion-margin-top"
+        >
+          Kreiraj novu torbicu
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-spinner *ngIf="loading"></ion-spinner>
+
+    <ion-text color="danger" *ngIf="error">
+      {{ error }}
+    </ion-text>
+
+    <div class="empty-state" *ngIf="!loading && orders.length === 0">
+      <h2>Nema porudžbina</h2>
+      <p>Poruči svoju prvu torbicu klikom na dugme iznad.</p>
+    </div>
+
+    <ion-list *ngIf="orders.length > 0">
+      <ion-card
+        *ngFor="let order of orders; trackBy: trackByOrderId"
+        [href]="'/orders/' + order.id"
+        button
+      >
+        <ion-card-header>
+          <ion-card-title>{{ order.customerName }}</ion-card-title>
+          <ion-card-subtitle>
+            {{ order.createdAt | date: 'dd.MM.yyyy. HH:mm' }}
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-chip color="primary" class="status-chip">
+            {{ statusLabels[order.status] }}
+          </ion-chip>
+
+          <p><strong>Model:</strong> {{ order.modelId }}</p>
+          <p><strong>Boja:</strong> {{ order.color }}</p>
+          <p><strong>Cena:</strong> {{ order.price | number }} RSD</p>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button href="/orders/new">
+      <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
