@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>BagCraft prijava</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-padding auth-wrapper">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Dobro došli!</ion-card-title>
+        <ion-card-subtitle>
+          Prijavi se i prati svoje porudžbine torbica.
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+
+          <ion-note
+            class="error"
+            *ngIf="form.controls.email.touched && form.controls.email.invalid"
+          >
+            Unesi ispravnu email adresu.
+          </ion-note>
+
+          <ion-item>
+            <ion-label position="floating">Lozinka</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+
+          <ion-note
+            class="error"
+            *ngIf="form.controls.password.touched && form.controls.password.invalid"
+          >
+            Lozinka mora imati najmanje 6 karaktera.
+          </ion-note>
+
+          <ion-button expand="block" type="submit" class="ion-margin-top">
+            Prijavi se
+          </ion-button>
+
+        </form>
+
+<ion-button
+            expand="block"
+            fill="clear"
+            type="button"
+            href="/register"
+          >Nemam nalog - registracija
+          </ion-button>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

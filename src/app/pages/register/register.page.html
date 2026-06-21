@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Registracija</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page-padding auth-wrapper">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Novi nalog</ion-card-title>
+        <ion-card-subtitle>Nakon registracije možeš da kreiraš personalizovanu torbicu.</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-note class="error" *ngIf="form.controls.email.touched && form.controls.email.invalid">
+            Unesi ispravnu email adresu.
+          </ion-note>
+
+          <ion-item>
+            <ion-label position="floating">Lozinka</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Ponovi lozinku</ion-label>
+            <ion-input type="password" formControlName="confirmPassword"></ion-input>
+          </ion-item>
+          <ion-note class="error" *ngIf="form.touched && !passwordsMatch()">
+            Lozinke moraju biti iste.
+          </ion-note>
+
+          <ion-button expand="block" type="submit" class="ion-margin-top">Registruj se</ion-button>
+          <ion-button expand="block" fill="clear" type="button" href="/login">
+  Već imam nalog
+</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
