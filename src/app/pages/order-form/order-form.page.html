@@ -16,12 +16,17 @@
         <ion-card-header>
           <ion-card-title>Podaci kupca</ion-card-title>
         </ion-card-header>
+
         <ion-card-content>
           <ion-item>
             <ion-label position="floating">Ime i prezime</ion-label>
             <ion-input formControlName="customerName"></ion-input>
           </ion-item>
-          <ion-note class="error" *ngIf="form.controls.customerName.touched && form.controls.customerName.invalid">
+
+          <ion-note
+            class="error"
+            *ngIf="form.controls.customerName.touched && form.controls.customerName.invalid"
+          >
             Ime je obavezno.
           </ion-note>
 
@@ -29,7 +34,11 @@
             <ion-label position="floating">Telefon</ion-label>
             <ion-input formControlName="phone" type="tel"></ion-input>
           </ion-item>
-          <ion-note class="error" *ngIf="form.controls.phone.touched && form.controls.phone.invalid">
+
+          <ion-note
+            class="error"
+            *ngIf="form.controls.phone.touched && form.controls.phone.invalid"
+          >
             Telefon je obavezan.
           </ion-note>
         </ion-card-content>
@@ -38,8 +47,11 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title>Konfigurator torbice</ion-card-title>
-          <ion-card-subtitle>Izbor opcija automatski menja okvirnu cenu.</ion-card-subtitle>
+          <ion-card-subtitle>
+            Izbor opcija automatski menja okvirnu cenu.
+          </ion-card-subtitle>
         </ion-card-header>
+
         <ion-card-content>
           <ion-item>
             <ion-label>Model</ion-label>
@@ -49,6 +61,27 @@
               </ion-select-option>
             </ion-select>
           </ion-item>
+
+          <!-- SLIKE MODELA TORBICA -->
+          <div class="model-preview-grid">
+            <div
+              class="model-preview-card"
+              *ngFor="let model of models"
+              [class.selected]="form.value.modelId === model.id"
+              (click)="form.patchValue({ modelId: model.id })"
+            >
+              <img
+                *ngIf="model.imageUrl"
+                [src]="model.imageUrl"
+                [alt]="model.label"
+              />
+
+              <div class="model-preview-info">
+                <h3>{{ model.label }}</h3>
+                <p>{{ model.price | number }} RSD</p>
+              </div>
+            </div>
+          </div>
 
           <ion-item>
             <ion-label>Materijal</ion-label>
@@ -62,7 +95,9 @@
           <ion-item>
             <ion-label>Boja</ion-label>
             <ion-select formControlName="color" interface="popover">
-              <ion-select-option *ngFor="let color of colors" [value]="color">{{ color }}</ion-select-option>
+              <ion-select-option *ngFor="let color of colors" [value]="color">
+                {{ color }}
+              </ion-select-option>
             </ion-select>
           </ion-item>
 
@@ -85,9 +120,17 @@
           </ion-item>
 
           <ion-list-header>Dodatni ukrasi</ion-list-header>
+
           <ion-item *ngFor="let addon of addons">
-            <ion-checkbox slot="start" [checked]="isAddonSelected(addon.id)" (ionChange)="toggleAddon(addon.id, $event.detail.checked)"></ion-checkbox>
-            <ion-label>{{ addon.label }} (+{{ addon.price | number }} RSD)</ion-label>
+            <ion-checkbox
+              slot="start"
+              [checked]="isAddonSelected(addon.id)"
+              (ionChange)="toggleAddon(addon.id, $event.detail.checked)"
+            ></ion-checkbox>
+
+            <ion-label>
+              {{ addon.label }} (+{{ addon.price | number }} RSD)
+            </ion-label>
           </ion-item>
 
           <ion-item>
