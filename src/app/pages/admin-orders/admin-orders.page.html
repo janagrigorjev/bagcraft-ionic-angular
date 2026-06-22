@@ -31,24 +31,56 @@
     </div>
 
     <ion-card *ngFor="let order of visibleOrders; trackBy: trackByOrderId">
-      <ion-card-header>
-        <ion-card-title>{{ order.customerName }}</ion-card-title>
-        <ion-card-subtitle>{{ order.userEmail }} • {{ order.createdAt | date: 'dd.MM.yyyy. HH:mm' }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <p><strong>Cena:</strong> {{ order.price | number }} RSD</p>
-        <p><strong>Telefon:</strong> {{ order.phone }}</p>
-        <p><strong>Boja:</strong> {{ order.color }}</p>
+  <ion-card-header>
+    <ion-card-title>{{ order.customerName }}</ion-card-title>
+    <ion-card-subtitle>
+      {{ order.userEmail }} • {{ order.createdAt | date: 'dd.MM.yyyy. HH:mm' }}
+    </ion-card-subtitle>
+  </ion-card-header>
 
-        <ion-item lines="none">
-          <ion-label>Status</ion-label>
-          <ion-select [value]="order.status" interface="popover" (ionChange)="changeStatus(order, $event.detail.value)">
-            <ion-select-option *ngFor="let status of statuses" [value]="status">
-              {{ statusLabels[status] }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
+  <ion-card-content>
+    <ion-chip color="primary" class="status-chip">
+      {{ statusLabels[order.status] }}
+    </ion-chip>
+
+    <h2>{{ order.price | number }} RSD</h2>
+
+    <p><strong>Telefon:</strong> {{ order.phone }}</p>
+    <p><strong>Model:</strong> {{ labelOf('model', order.modelId) }}</p>
+    <p><strong>Materijal:</strong> {{ labelOf('material', order.materialId) }}</p>
+    <p><strong>Boja:</strong> {{ order.color }}</p>
+    <p><strong>Veličina:</strong> {{ labelOf('size', order.sizeId) }}</p>
+    <p><strong>Ručka / kaiš:</strong> {{ labelOf('handle', order.handleId) }}</p>
+    <p><strong>Dodatni ukrasi:</strong> {{ addonLabels(order) }}</p>
+    <p><strong>Količina:</strong> {{ order.quantity }}</p>
+
+    <p *ngIf="order.note">
+      <strong>Napomena:</strong> {{ order.note }}
+    </p>
+
+    <ion-item lines="none">
+      <ion-label>Status</ion-label>
+
+      <ion-select
+        [value]="order.status"
+        interface="popover"
+        (ionChange)="changeStatus(order, $event.detail.value)"
+      >
+        <ion-select-option *ngFor="let status of statuses" [value]="status">
+          {{ statusLabels[status] }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-button
+      expand="block"
+      color="danger"
+      fill="outline"
+      (click)="deleteOrder(order)"
+    >
+      Obriši porudžbinu
+    </ion-button>
+  </ion-card-content>
+</ion-card>
   </div>
 </ion-content>

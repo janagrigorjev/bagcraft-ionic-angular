@@ -75,6 +75,11 @@ export class OrderService {
     return this.http.delete<void>(`${this.dbUrl}/orders/${userId}/${orderId}.json?auth=${token}`);
   }
 
+  deleteOrderForAdmin(ownerUid: string, orderId: string): Observable<void> {
+  const token = this.authService.getToken();
+  return this.http.delete<void>(`${this.dbUrl}/orders/${ownerUid}/${orderId}.json?auth=${token}`);
+}
+
   cancelOrder(orderId: string): Observable<BagOrder> {
     return this.updateOrder(orderId, { status: 'cancelled' });
   }
